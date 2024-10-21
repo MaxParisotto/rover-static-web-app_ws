@@ -1,5 +1,7 @@
 {
     "recommendations": [
-        "howardzuo.vscode-npm-dependency"
+        "howardzuo.vscode-npm-dependency",
+        "figma.figma-vscode-extension",
+        "builder.builder"
     ]
 }

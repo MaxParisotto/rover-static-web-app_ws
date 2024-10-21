@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { builder } from "@builder.io/react";
 
-function App() {
+// Put your API key here
+builder.init(YOUR_API_KEY);
+
+export default function App() {
+  const [links, setLinks] = useState([]);
+
+  // Get the CMS data from Builder
+  useEffect(() => {
+    async function fetchContent() {
+      const links = await builder.getAll("nav-links", {
+        // You can use options for queries, sorting, and targeting here
+        // https://github.com/BuilderIO/builder/blob/main/packages/core/docs/interfaces/GetContentOptions.md
+      });
+      setLinks(links);
+    }
+    fetchContent();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header>
+        <nav>
+          {links.map((link, index) => (
+            <a key={index} href={link.data.url}>
+              {link.data.label}
+            </a>
+          ))}
+        </nav>
       </header>
-    </div>
+      {/* Put the rest of your page here */}
+      {/* <RestOfYourPage /> */}
+    </>
   );
 }
-
-export default App;
